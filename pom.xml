@@ -14,6 +14,9 @@
         <module>gomall-product</module>
         <module>gomall-ware</module>
         <module>gomall-member</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
+        <module>gomall-common</module>
     </modules>
 
 </project>
