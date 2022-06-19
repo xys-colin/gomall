@@ -6,6 +6,32 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: product_route
+          uri: lb://gomall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: third_party_route
+          uri: lb://gomall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+
+        - id: admin_route
+          #lb:负载均衡 后面是注册中心的服务名
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            # 路径转发重写
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
+
 
 
 server:
