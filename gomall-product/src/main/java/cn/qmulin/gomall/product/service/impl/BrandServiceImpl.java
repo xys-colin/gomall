@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 /**
- * @author yaoxinjia
+ * @author xys
  */
 @Service("brandService")
 public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> implements BrandService {
@@ -49,7 +49,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
     public void updateDetail(BrandEntity brand) {
         this.updateById(brand);
         if (!StringUtils.isEmpty(brand.getName())) {
-           // categoryBrandRelationService.updateBrand(brand.getBrandId(),brand.getName());
+           categoryBrandRelationService.updateBrand(brand.getBrandId(),brand.getName());
 
             // TODO 更新其他关联
         }
