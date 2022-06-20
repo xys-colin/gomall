@@ -9,6 +9,7 @@ import cn.qmulin.gomall.product.service.AttrAttrgroupRelationService;
 import cn.qmulin.gomall.product.service.AttrService;
 import cn.qmulin.gomall.product.service.CategoryService;
 import cn.qmulin.gomall.product.vo.AttrGroupRelationVo;
+import cn.qmulin.gomall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,8 +52,8 @@ public class AttrGroupController {
         // 1 查出当前分类下的所有属性分组
 
         // 2 查出每个属性分组的所有属性
-        //List<AttrGroupWithAttrsVo> vos = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
-        return R.ok();//.put("data", vos);
+        List<AttrGroupWithAttrsVo> vos = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+        return R.ok().put("data", vos);
     }
 
     @GetMapping("/{attrgroupId}/attr/relation")

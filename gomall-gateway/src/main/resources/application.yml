@@ -16,12 +16,19 @@ spring:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
         - id: member_route
-            uri: lb://gomall-member
-            predicates:
-              - Path=/api/memeber/**
-            filters:
-              - RewritePath=/api/(?<segment>.*),/$\{segment}
+          uri: lb://gomall-member
+          predicates:
+            - Path=/api/memeber/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: ware_route
+          uri: lb://gomall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+            -
         - id: third_party_route
           uri: lb://gomall-third-party
           predicates:

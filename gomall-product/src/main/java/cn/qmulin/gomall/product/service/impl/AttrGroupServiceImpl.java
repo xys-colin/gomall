@@ -2,6 +2,7 @@ package cn.qmulin.gomall.product.service.impl;
 
 import cn.qmulin.gomall.product.entity.AttrEntity;
 import cn.qmulin.gomall.product.service.AttrService;
+import cn.qmulin.gomall.product.vo.AttrGroupWithAttrsVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,33 +69,33 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
      * @param catelogId
      * @return
      */
-//    @Override
-//    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId) {
-//
-//        // 1 查出分组信息
-//        List<AttrGroupEntity> attrGroupEntities = this.list(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
-//
-//        // 2 查询所有属性
-//        List<AttrGroupWithAttrsVo> collect = attrGroupEntities.stream().map((group) -> {
-//            AttrGroupWithAttrsVo attrsVo = new AttrGroupWithAttrsVo();
-//            BeanUtils.copyProperties(group,attrsVo);
-//            List<AttrEntity> attrs = attrService.getRelationAttr(attrsVo.getAttrGroupId());
-//            attrsVo.setAttrs(attrs);
-//            return  attrsVo;
-//        }).collect(Collectors.toList());
-//        List<AttrGroupWithAttrsVo> collect2 = collect.stream().filter((item) -> {
-//            if (item.getAttrs() == null) {
-//                return true;
-//            } else {
-//                List<AttrEntity> collect1 = item.getAttrs().stream().filter((u) -> {
-//                    return u.getAttrType() == 1;
-//                }).collect(Collectors.toList());
-//                item.setAttrs(collect1);
-//                return true;
-//            }
-//        }).collect(Collectors.toList());
-//        return collect2;
-//    }
+    @Override
+    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId) {
+
+        // 1 查出分组信息
+        List<AttrGroupEntity> attrGroupEntities = this.list(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
+
+        // 2 查询所有属性
+        List<AttrGroupWithAttrsVo> collect = attrGroupEntities.stream().map((group) -> {
+            AttrGroupWithAttrsVo attrsVo = new AttrGroupWithAttrsVo();
+            BeanUtils.copyProperties(group,attrsVo);
+            List<AttrEntity> attrs = attrService.getRelationAttr(attrsVo.getAttrGroupId());
+            attrsVo.setAttrs(attrs);
+            return  attrsVo;
+        }).collect(Collectors.toList());
+        List<AttrGroupWithAttrsVo> collect2 = collect.stream().filter((item) -> {
+            if (item.getAttrs() == null) {
+                return true;
+            } else {
+                List<AttrEntity> collect1 = item.getAttrs().stream().filter((u) -> {
+                    return u.getAttrType() == 1;
+                }).collect(Collectors.toList());
+                item.setAttrs(collect1);
+                return true;
+            }
+        }).collect(Collectors.toList());
+        return collect2;
+    }
 //
 //    @Override
 //    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {

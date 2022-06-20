@@ -1,6 +1,7 @@
 package cn.qmulin.gomall.product.service;
 
 import cn.qmulin.gomall.product.entity.AttrEntity;
+import cn.qmulin.gomall.product.vo.AttrGroupWithAttrsVo;
 import cn.qmulin.gomall.product.vo.AttrRespVo;
 import cn.qmulin.gomall.product.vo.AttrVo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -22,9 +23,9 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
 
-//    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
+    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
 //
-//    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId);
+//   List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId);
 }
 
 
