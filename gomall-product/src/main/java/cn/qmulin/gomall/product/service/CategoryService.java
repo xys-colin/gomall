@@ -1,5 +1,6 @@
 package cn.qmulin.gomall.product.service;
 
+import cn.qmulin.gomall.product.vo.Catelog2Vo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.qmulin.common.utils.PageUtils;
 import cn.qmulin.gomall.product.entity.CategoryEntity;
@@ -25,5 +26,10 @@ public interface CategoryService extends IService<CategoryEntity> {
     Long[] findCatelogPath(Long catelogId);
 
     void updateCascade(CategoryEntity category);
+
+    List<CategoryEntity> getLevel1Categorys();
+
+    Map<String, List<Catelog2Vo>> getCatalogJson();
+
 }
 

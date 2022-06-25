@@ -19,6 +19,7 @@
         <module>gomall-common</module>
         <module>gomall-third-party</module>
         <module>gomall-gateway</module>
+        <module>gomall-search</module>
     </modules>
 
 </project>

@@ -1,6 +1,5 @@
 package cn.qmulin.common.to;
 
-import cn.qmulin.gomall.product.vo.MemberPrice;
 import lombok.Data;
 
 import java.math.BigDecimal;

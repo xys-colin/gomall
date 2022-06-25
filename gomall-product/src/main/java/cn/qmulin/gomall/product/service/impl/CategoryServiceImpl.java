@@ -1,6 +1,7 @@
 package cn.qmulin.gomall.product.service.impl;
 
 import cn.qmulin.gomall.product.service.CategoryBrandRelationService;
+import cn.qmulin.gomall.product.vo.Catelog2Vo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import cn.qmulin.gomall.product.dao.CategoryDao;
 import cn.qmulin.gomall.product.entity.CategoryEntity;
 import cn.qmulin.gomall.product.service.CategoryService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 
 @Service("categoryService")
@@ -71,6 +73,36 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
+    }
+
+    @Override
+    public List<CategoryEntity> getLevel1Categorys() {
+       return baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid",0));
+    }
+
+    @Override
+    public Map<String, List<Catelog2Vo>> getCatalogJson() {
+        List<CategoryEntity> level1Categorys = getLevel1Categorys();
+        Map<String, List<Catelog2Vo>> parent_cid = level1Categorys.stream().collect(Collectors.toMap(k -> k.getCatId().toString(), v -> {
+            List<CategoryEntity> categoryEntities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", v.getCatId()));
+            List<Catelog2Vo> catelog2Vos = null;
+            if (!CollectionUtils.isEmpty(categoryEntities)) {
+                catelog2Vos = categoryEntities.stream().map(item -> {
+                    Catelog2Vo catelog2Vo = new Catelog2Vo(v.getCatId().toString(), null, item.getCatId().toString(), item.getName());
+                    List<CategoryEntity> level3 = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", item.getCatId()));
+                    if (!CollectionUtils.isEmpty(level3)) {
+                        List<Catelog2Vo.Catelog3Vo> catelog3Vos = level3.stream().map(categoryEntity -> {
+                            Catelog2Vo.Catelog3Vo catelog3Vo = new Catelog2Vo.Catelog3Vo(item.getCatId().toString(),categoryEntity.getCatId().toString(),categoryEntity.getName());
+                            return catelog3Vo;
+                        }).collect(Collectors.toList());
+                        catelog2Vo.setCatalog3List(catelog3Vos);
+                    }
+                    return catelog2Vo;
+                }).collect(Collectors.toList());
+            }
+            return catelog2Vos;
+        }));
+        return parent_cid;
     }
 
     private List<Long> findParentPath(Long catelogId, ArrayList<Long> paths) {
