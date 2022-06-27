@@ -49,7 +49,12 @@ spring:
         #lb:负载均衡 后面是注册中心的服务名
           uri: lb://gomall-product
           predicates:
-             - Host=**.gomall.com
+             - Host=gomall.com
+        - id: gomall_search_route
+          #lb:负载均衡 后面是注册中心的服务名
+          uri: lb://gomall-search
+          predicates:
+            - Host=search.gomall.com
 
 
 
