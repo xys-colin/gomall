@@ -39,5 +39,8 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-
-
+gomall:
+  thread:
+    core-size: 20
+    max-size: 200
+    keep-alive-time: 10

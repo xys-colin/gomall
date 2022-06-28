@@ -3,6 +3,7 @@ package cn.qmulin.gomall.product.service.impl;
 import cn.qmulin.gomall.product.entity.AttrEntity;
 import cn.qmulin.gomall.product.service.AttrService;
 import cn.qmulin.gomall.product.vo.AttrGroupWithAttrsVo;
+import cn.qmulin.gomall.product.vo.SpuItemAttrGroupVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,12 +97,12 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         }).collect(Collectors.toList());
         return collect2;
     }
-//
-//    @Override
-//    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {
-//        //查询当前spu对应的所有属性的分组信息以及当前分组下所有属性对应的值
-//        List<SpuItemAttrGroupVo> vos = this.baseMapper.getAttrGroupWithAttrsBySpuId(spuId,catalogId);
-//        return vos;
-//    }
+
+    @Override
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {
+        //查询当前spu对应的所有属性的分组信息以及当前分组下所有属性对应的值
+        List<SpuItemAttrGroupVo> vos = this.baseMapper.getAttrGroupWithAttrsBySpuId(spuId,catalogId);
+        return vos;
+    }
 
 }
