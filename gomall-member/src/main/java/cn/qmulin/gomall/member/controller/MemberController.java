@@ -3,13 +3,15 @@ package cn.qmulin.gomall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import cn.qmulin.common.exception.BizCodeEnum;
+import cn.qmulin.gomall.member.exception.PhoneException;
+import cn.qmulin.gomall.member.exception.UsernameException;
 import cn.qmulin.gomall.member.feign.CouponFeignService;
+import cn.qmulin.gomall.member.vo.MemberRegisterVo;
+import cn.qmulin.gomall.member.vo.MemberUserLoginVo;
+import cn.qmulin.gomall.member.vo.SocialUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.qmulin.gomall.member.entity.MemberEntity;
 import cn.qmulin.gomall.member.service.MemberService;
@@ -41,6 +43,44 @@ public class MemberController {
 
         // 打印会员和优惠券信息
         return R.ok().put("member",memberEntity).put("coupons",membercoupons.get("coupons"));
+    }
+
+
+    @PostMapping(value = "/oauth2/login")
+    public R oauthLogin(@RequestBody SocialUser socialUser) throws Exception {
+
+        MemberEntity memberEntity = memberService.login(socialUser);
+
+        if (memberEntity != null) {
+            return R.ok().setData(memberEntity);
+        } else {
+            return R.error(BizCodeEnum.LOGIN_ACCOUNT_PASSWORD_INVALID.getCode(),BizCodeEnum.LOGIN_ACCOUNT_PASSWORD_INVALID.getMsg());
+        }
+    }
+
+    @PostMapping("/register")
+    public R register(@RequestBody MemberRegisterVo vo){
+        try {
+            memberService.register(vo);
+        } catch (PhoneException e) {
+            return R.error(BizCodeEnum.PHONE_EXISTS_EXCEPTION.getCode(),BizCodeEnum.PHONE_EXISTS_EXCEPTION.getMsg());
+        } catch (UsernameException e) {
+            return R.error(BizCodeEnum.USER_EXISTS_EXCEPTION.getCode(),BizCodeEnum.USER_EXISTS_EXCEPTION.getMsg());
+        }
+
+        return R.ok();
+    }
+
+    @PostMapping(value = "/login")
+    public R login(@RequestBody MemberUserLoginVo vo) {
+
+        MemberEntity memberEntity = memberService.login(vo);
+
+        if (memberEntity != null) {
+            return R.ok().put("data",memberEntity);
+        } else {
+            return R.error(BizCodeEnum.LOGIN_ACCOUNT_PASSWORD_INVALID.getCode(),BizCodeEnum.LOGIN_ACCOUNT_PASSWORD_INVALID.getMsg());
+        }
     }
     /**
      * 列表

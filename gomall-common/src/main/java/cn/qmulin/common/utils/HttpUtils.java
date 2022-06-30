@@ -1,4 +1,4 @@
-package cn.qmulin.gomall.thirdparty.utils;
+package cn.qmulin.common.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

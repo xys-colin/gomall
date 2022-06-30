@@ -1,6 +1,6 @@
 package cn.qmulin.gomall.thirdparty.component;
 
-import cn.qmulin.gomall.thirdparty.utils.HttpUtils;
+import cn.qmulin.common.utils.HttpUtils;
 import lombok.Data;
 import org.apache.http.HttpResponse;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -5,8 +5,10 @@ import cn.qmulin.common.exception.BizCodeEnum;
 import cn.qmulin.common.utils.R;
 import cn.qmulin.gomall.auth.feign.MemberFeignService;
 import cn.qmulin.gomall.auth.feign.ThirdPartyFeignService;
+import cn.qmulin.common.vo.MemberRespVo;
 import cn.qmulin.gomall.auth.vo.UserLoginVo;
 import cn.qmulin.gomall.auth.vo.UserRegisterVo;
+import com.alibaba.fastjson.TypeReference;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -63,7 +65,7 @@ public class LoginController {
         return R.ok();
     }
     /**
-     * 利用session原理，将数据放在session中，只要跳到下一个页面的取出这个数据以后，session里面的数据就会被删掉
+     * 重定向携带数据利用session原理，将数据放在session中，只要跳到下一个页面的取出这个数据以后，session里面的数据就会被删掉
      * @param vo
      * @param result
      * @param redirectAttributes: 模拟重定向携带数据
@@ -86,7 +88,7 @@ public class LoginController {
                 //删除验证码;令牌机制
                 redisTemplate.delete(AuthServerConstant.SMS_CODE_CACHE_PREFIX + vo.getPhone());
                 //验证码校验通过,真正注册，调用远程服务注册
-                R r = memberFeignService.regist(vo);
+                R r = memberFeignService.register(vo);
                 if (r.getCode()==0){
                     //成功,转到登录页
                     return "redirect:http://auth.gulimall.com/login.html";
@@ -112,22 +114,22 @@ public class LoginController {
             return "redirect:http://auth.gulimall.com/reg.html";
         }
     }
-//    @PostMapping("/login")
-//    public String login(UserLoginVo vo, RedirectAttributes redirectAttributes, HttpSession session){
-//        //远程登录
-//        R r = memberFeignService.login(vo);
-//        if (r.getCode()==0){
-//            MemberRespVo data = r.getData(new TypeReference<MemberRespVo>() {
-//            });
-//            session.setAttribute(AuthServerConstant.SESSION_LOGIN_KEY,data);
-//            return "redirect:http://gulimall.com";
-//        }else{
-//            Map<String,String> errors = new HashMap<>();
-//            errors.put("msg",r.getData("msg",new TypeReference<String>(){}));
-//            redirectAttributes.addFlashAttribute("errors",errors);
-//            return "redirect:http://auth.gulimall.com/login.html";
-//        }
-//    }
+    @PostMapping("/login")
+    public String login(UserLoginVo vo, RedirectAttributes redirectAttributes, HttpSession session){
+        //远程登录
+        R r = memberFeignService.login(vo);
+        if (r.getCode()==0){
+            MemberRespVo data = r.getData(new TypeReference<MemberRespVo>() {
+            });
+            session.setAttribute(AuthServerConstant.SESSION_LOGIN_KEY,data);
+            return "redirect:http://gomall.com";
+        }else{
+            Map<String,String> errors = new HashMap<>();
+            errors.put("msg",r.getData("msg",new TypeReference<String>(){}));
+            redirectAttributes.addFlashAttribute("errors",errors);
+            return "redirect:http://auth.gomall.com/login.html";
+        }
+    }
 
     @GetMapping("/login.html")
     public String loginPage(HttpSession session){

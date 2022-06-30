@@ -1,9 +1,7 @@
 package cn.qmulin.gomall.thirdparty;
 
 import cn.qmulin.gomall.thirdparty.component.SmsComponent;
-import cn.qmulin.gomall.thirdparty.utils.HttpUtils;
 import com.aliyun.oss.OSSClient;
-import org.apache.http.HttpResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootTest
 public class GomallThirdPartyApplicationTests {
