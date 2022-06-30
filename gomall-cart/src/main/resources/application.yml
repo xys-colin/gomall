@@ -1,0 +1,24 @@
+server:
+  port: 31000
+spring:
+  application:
+    name: gomall-cart
+  thymeleaf:
+    cache: true
+    check-template: true
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    excluded-view-names: ''
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+
+  redis:
+    host: 39.99.246.104
+    port: 6379
+    password: 990326bai
+
+  session:
+    store-type: redis

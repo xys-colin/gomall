@@ -62,6 +62,13 @@ spring:
           predicates:
             - Host=auth.gomall.com
 
+        - id: gomall_cart_route
+          #lb:负载均衡 后面是注册中心的服务名
+          uri: lb://gomall-cart
+          predicates:
+            - Host=cart.gomall.com
+
+
 
 
 
