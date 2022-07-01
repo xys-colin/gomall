@@ -1,14 +1,11 @@
 package cn.qmulin.gomall.product.app;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.qmulin.gomall.product.entity.SkuSaleAttrValueEntity;
 import cn.qmulin.gomall.product.service.SkuSaleAttrValueService;
@@ -29,6 +26,10 @@ import cn.qmulin.common.utils.R;
 public class SkuSaleAttrValueController {
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
+    @GetMapping("/stringlist/{skuId}")
+    public List<String> getSkuSaleAttrValues(@PathVariable("skuId") Long skuId){
+       return skuSaleAttrValueService.getSkuSaleAttrValuesAsList(skuId);
+    }
 
     /**
      * 列表

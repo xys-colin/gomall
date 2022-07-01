@@ -35,6 +35,9 @@
         WHERE
             sku_id = #{skuId}
     </select>
+    <select id="getSkuSaleAttrValuesAsList" resultType="java.lang.String">
+        select contact(attr_name,":",attr_value) from `pms_sku_sale_attr_value` where sku_id=#{skuId}
+    </select>
 
 
 </mapper>

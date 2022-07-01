@@ -9,13 +9,24 @@ import java.util.List;
  * @author: xys
  * @date: 2022/6/30 22:07
  */
-public class CartItem implements Serializable {
+public class CartItemVo implements Serializable {
     private Long skuId;
-    private Boolean check=true;
+
+    private Boolean check = true;
+
+    private String title;
+
     private String image;
-    private List<String> skuAttr;
+
+    /**
+     * 商品套餐属性
+     */
+    private List<String> skuAttrValues;
+
     private BigDecimal price;
+
     private Integer count;
+
     private BigDecimal totalPrice;
 
     public Long getSkuId() {
@@ -34,6 +45,14 @@ public class CartItem implements Serializable {
         this.check = check;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getImage() {
         return image;
     }
@@ -42,12 +61,12 @@ public class CartItem implements Serializable {
         this.image = image;
     }
 
-    public List<String> getSkuAttr() {
-        return skuAttr;
+    public List<String> getSkuAttrValues() {
+        return skuAttrValues;
     }
 
-    public void setSkuAttr(List<String> skuAttr) {
-        this.skuAttr = skuAttr;
+    public void setSkuAttrValues(List<String> skuAttrValues) {
+        this.skuAttrValues = skuAttrValues;
     }
 
     public BigDecimal getPrice() {
@@ -66,8 +85,13 @@ public class CartItem implements Serializable {
         this.count = count;
     }
 
+    /**
+     * 计算当前购物项总价
+     * @return
+     */
     public BigDecimal getTotalPrice() {
-        return this.price.multiply(new BigDecimal(this.count));
+
+        return this.price.multiply(new BigDecimal("" + this.count));
     }
 
     public void setTotalPrice(BigDecimal totalPrice) {

@@ -11,11 +11,11 @@ import java.util.List;
  * @author: xys
  * @date: 2022/6/30 22:12
  */
-public class Cart implements Serializable {
+public class CartVo implements Serializable {
     /**
      * 购物车子项信息
      */
-    List<CartItem> items;
+    List<CartItemVo> items;
 
     /**
      * 商品数量
@@ -37,18 +37,18 @@ public class Cart implements Serializable {
      */
     private BigDecimal reduce = new BigDecimal("0.00");;
 
-    public List<CartItem> getItems() {
+    public List<CartItemVo> getItems() {
         return items;
     }
 
-    public void setItems(List<CartItem> items) {
+    public void setItems(List<CartItemVo> items) {
         this.items = items;
     }
 
     public Integer getCountNum() {
         int count = 0;
         if (items != null && items.size() > 0) {
-            for (CartItem item : items) {
+            for (CartItemVo item : items) {
                 count += item.getCount();
             }
         }
@@ -58,7 +58,7 @@ public class Cart implements Serializable {
     public Integer getCountType() {
         int count = 0;
         if (items != null && items.size() > 0) {
-            for (CartItem item : items) {
+            for (CartItemVo item : items) {
                 count += 1;
             }
         }
@@ -70,9 +70,9 @@ public class Cart implements Serializable {
         BigDecimal amount = new BigDecimal("0");
         // 计算购物项总价
         if (!CollectionUtils.isEmpty(items)) {
-            for (CartItem cartItem : items) {
-                if (cartItem.getCheck()) {
-                    amount = amount.add(cartItem.getTotalPrice());
+            for (CartItemVo cartItemVo : items) {
+                if (cartItemVo.getCheck()) {
+                    amount = amount.add(cartItemVo.getTotalPrice());
                 }
             }
         }
