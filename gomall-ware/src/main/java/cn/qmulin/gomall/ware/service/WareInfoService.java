@@ -1,9 +1,11 @@
 package cn.qmulin.gomall.ware.service;
 
+import cn.qmulin.gomall.ware.vo.FareVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.qmulin.common.utils.PageUtils;
 import cn.qmulin.gomall.ware.entity.WareInfoEntity;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -16,5 +18,8 @@ import java.util.Map;
 public interface WareInfoService extends IService<WareInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    FareVo getFare(Long addrId);
+
 }
 

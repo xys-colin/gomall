@@ -1,14 +1,12 @@
 package cn.qmulin.gomall.ware.controller;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
 
+import cn.qmulin.gomall.ware.vo.FareVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.qmulin.gomall.ware.entity.WareInfoEntity;
 import cn.qmulin.gomall.ware.service.WareInfoService;
@@ -29,6 +27,17 @@ import cn.qmulin.common.utils.R;
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
+
+    /**
+     * 根据用户收货地址计算运费
+     * @param addrId
+     * @return
+     */
+    @GetMapping("/fare")
+    public R getFare(@RequestParam Long addrId){
+        FareVo fare= wareInfoService.getFare(addrId);
+        return R.ok().setData(fare);
+    }
 
     /**
      * 列表

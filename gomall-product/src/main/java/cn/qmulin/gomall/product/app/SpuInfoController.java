@@ -26,6 +26,17 @@ public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+    /**
+     * 根据skuid查找spu信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/skuId/{id}")
+    public R getSpuInfoBySkuId(@PathVariable Long id) {
+        SpuInfoEntity spuInfoEntity = spuInfoService.getSpuInfoBySkuId(id);
+        return R.ok().setData(spuInfoEntity);
+    }
+
     @PostMapping("/{spuId}/up")
     public R spuUp(@PathVariable("spuId") long spuId) {
         spuInfoService.up(spuId);

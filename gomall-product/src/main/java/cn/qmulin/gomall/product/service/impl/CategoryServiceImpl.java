@@ -147,7 +147,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //            redisTemplate.expire("lock", 30, TimeUnit.SECONDS);
                 Map<String, List<Catelog2Vo>> dataFromDB;
                 try {
-                    dataFromDB = getCatalogJson();
+                    dataFromDB = getCatalogJsonFromDB();
                 } finally {
                     String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
                     // 删除锁

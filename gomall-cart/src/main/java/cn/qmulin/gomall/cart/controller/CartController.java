@@ -26,7 +26,7 @@ public class CartController {
     private CartService cartService;
 
     /**
-     * 获取当前用户的购物车商品项
+     * 获取当前用户的购物车选中商品项
      * @return
      */
     @GetMapping(value = "/currentUserCartItems")

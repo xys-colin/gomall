@@ -1,6 +1,9 @@
 package cn.qmulin.gomall.ware.service;
 
+import cn.qmulin.common.to.mq.OrderTo;
+import cn.qmulin.common.to.mq.StockLockedTo;
 import cn.qmulin.common.vo.SkuHasStockVo;
+import cn.qmulin.gomall.ware.vo.WareSkuLockVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.qmulin.common.utils.PageUtils;
 import cn.qmulin.gomall.ware.entity.WareSkuEntity;
@@ -22,5 +25,11 @@ public interface WareSkuService extends IService<WareSkuEntity> {
     void addStock(Long skuId, Long wareId, Integer skuNum);
 
     List<SkuHasStockVo> getSkusHasStock(List<Long> skuIds);
+
+    Boolean orderLockStock(WareSkuLockVo wareSkuLockVo);
+
+    void unlockStock(StockLockedTo to );
+
+    void unlockStock(OrderTo orderTo);
 }
 

@@ -1,10 +1,14 @@
 package cn.qmulin.gomall.order.service;
 
+import cn.qmulin.gomall.order.vo.OrderConfirmVo;
+import cn.qmulin.gomall.order.vo.OrderSubmitVo;
+import cn.qmulin.gomall.order.vo.SubmitOrderResponseVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.qmulin.common.utils.PageUtils;
 import cn.qmulin.gomall.order.entity.OrderEntity;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 订单
@@ -16,5 +20,12 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    OrderConfirmVo confirmOrder() throws ExecutionException, InterruptedException;
+
+    SubmitOrderResponseVo submitOrder(OrderSubmitVo vo);
+    OrderEntity getOrderByOrderSn(String orderSn);
+    void closeOrder(OrderEntity orderEntity);
+
 }
 

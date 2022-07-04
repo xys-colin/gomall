@@ -7,6 +7,32 @@ spring:
     username: root
     password: 990326
     url: jdbc:mysql://localhost:3306/gomall_oms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+  rabbitmq:
+    host: 192.168.40.127
+    port: 5672
+    virtual-host: /
+    #开启发送端消息抵达队列的确认
+    publisher-confirm-type: correlated
+    #只要抵达队列，以异步发送优先回调
+    publisher-returns: true
+    #开启手动确认消费消息
+    listener:
+      simple:
+        acknowledge-mode: MANUAL
+
+  session:
+    store-type: redis
+
+  redis:
+    host: 39.99.246.104
+    port: 6379
+    password: 990326bai
 # 应用服务 WEB 访问端口
 server:
   port: 9000

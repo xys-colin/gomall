@@ -1,5 +1,9 @@
 package cn.qmulin.gomall.order.service.impl;
 
+import cn.qmulin.gomall.order.entity.OrderReturnReasonEntity;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -25,5 +29,9 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEnt
 
         return new PageUtils(page);
     }
+    @RabbitListener(queues = {"gomall"})
+    public void consumer(Message message,
+                         OrderReturnReasonEntity content){
 
+    }
 }
