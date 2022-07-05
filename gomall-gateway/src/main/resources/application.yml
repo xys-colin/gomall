@@ -14,6 +14,13 @@ spring:
             - Path=/api/product/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: coupon_route
+          uri: lb://gomall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
 
         - id: member_route
           uri: lb://gomall-member
@@ -64,9 +71,13 @@ spring:
           predicates:
             - Host=cart.gomall.com
         - id: gomall_order_route
-          uri: lb://gomall-oreder
+          uri: lb://gomall-order
           predicates:
             - Host=order.gomall.com
+        - id: gomall_member_route
+          uri: lb://gomall-member
+          predicates:
+            - Host=member.gomall.com
 
 
 

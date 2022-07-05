@@ -1,8 +1,6 @@
 package cn.qmulin.gomall.order.service;
 
-import cn.qmulin.gomall.order.vo.OrderConfirmVo;
-import cn.qmulin.gomall.order.vo.OrderSubmitVo;
-import cn.qmulin.gomall.order.vo.SubmitOrderResponseVo;
+import cn.qmulin.gomall.order.vo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.qmulin.common.utils.PageUtils;
 import cn.qmulin.gomall.order.entity.OrderEntity;
@@ -27,5 +25,12 @@ public interface OrderService extends IService<OrderEntity> {
     OrderEntity getOrderByOrderSn(String orderSn);
     void closeOrder(OrderEntity orderEntity);
 
+    PayVo getOrderPay(String orderSn);
+
+    PageUtils queryPageWithItem(Map<String, Object> params);
+
+    String handlePayResult(PayAsyncVo vo);
+
+    //void createSeckillOrder(SeckillOrderTo orderTo);
 }
 

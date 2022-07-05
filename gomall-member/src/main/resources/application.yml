@@ -11,6 +11,14 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+
+  session:
+    store-type: redis
+
+  redis:
+    host: 39.99.246.104
+    port: 6379
+    password: 990326bai
 # 应用服务 WEB 访问端口
 server:
   port: 8000

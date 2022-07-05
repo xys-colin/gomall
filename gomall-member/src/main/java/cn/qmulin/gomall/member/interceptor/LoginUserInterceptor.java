@@ -1,4 +1,4 @@
-package cn.qmulin.gomall.order.interceptor;
+package cn.qmulin.gomall.member.interceptor;
 
 import cn.qmulin.common.constant.AuthServerConstant;
 import cn.qmulin.common.vo.MemberRespVo;
@@ -20,10 +20,8 @@ public class LoginUserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        AntPathMatcher matcher = new AntPathMatcher();
-        boolean match = matcher.match("/order/order/status/**", uri);
-        boolean match1 = matcher.match("/payed/notify", uri);
-        if (match||match1) return true;
+        boolean match = new AntPathMatcher().match("/member/**", uri);
+        if (match) return true;
         MemberRespVo attribute = (MemberRespVo) request.getSession().getAttribute(AuthServerConstant.SESSION_LOGIN_KEY);
         if (attribute != null) {
             loginUser.set(attribute);

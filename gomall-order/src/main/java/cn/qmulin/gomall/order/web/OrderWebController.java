@@ -1,4 +1,4 @@
-package cn.qmulin.gomall.order.controller;
+package cn.qmulin.gomall.order.web;
 
 import cn.qmulin.gomall.order.service.OrderService;
 import cn.qmulin.gomall.order.vo.OrderConfirmVo;
