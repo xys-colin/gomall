@@ -78,6 +78,10 @@ spring:
           uri: lb://gomall-member
           predicates:
             - Host=member.gomall.com
+        - id: gomall_seckill_route
+          uri: lb://gomall-seckill
+          predicates:
+            - Host=seckill.gomall.com
 
 
 

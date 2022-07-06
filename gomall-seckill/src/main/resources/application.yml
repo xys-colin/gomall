@@ -1,0 +1,27 @@
+# 应用名称
+spring:
+  application:
+    name: gomall-seckill
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  redis:
+    host: 39.99.246.104
+    port: 6379
+    password: 990326bai
+
+  task:
+    scheduling:
+      pool:
+        #修改定时任务线程池线程数量, 默认为1, 但这里修改数量不一定能生效
+        size: 5
+# 应用服务 WEB 访问端口
+server:
+  port: 25000
+
+

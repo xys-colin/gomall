@@ -21,6 +21,7 @@
         <module>gomall-search</module>
         <module>gomall-auth-server</module>
         <module>gomall-cart</module>
+        <module>gomall-seckill</module>
     </modules>
 
 </project>

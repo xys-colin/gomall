@@ -3,6 +3,7 @@ package cn.qmulin.gomall.product.service.impl;
 import cn.qmulin.common.utils.R;
 import cn.qmulin.gomall.product.entity.SkuImagesEntity;
 import cn.qmulin.gomall.product.entity.SpuInfoDescEntity;
+import cn.qmulin.gomall.product.feign.SeckillFeignService;
 import cn.qmulin.gomall.product.service.*;
 import cn.qmulin.gomall.product.vo.SeckillSkuVo;
 import cn.qmulin.gomall.product.vo.SkuItemSaleAttrVo;
@@ -37,6 +38,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     private AttrGroupService attrGroupService;
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
+    @Autowired
+    SeckillFeignService seckillFeignService;
     @Autowired
     private ThreadPoolExecutor executor;
     @Override
@@ -90,28 +93,26 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             skuItemVo.setImages(skuImagesEntityList);
         }, executor);
 
-//        CompletableFuture<Void> seckillFuture = CompletableFuture.runAsync(() -> {
-//            //3、远程调用查询当前sku是否参与秒杀优惠活动
-//            R skuSeckilInfo = seckillFeignService.getSkuSeckilInfo(skuId);
-//            if (skuSeckilInfo.getCode() == 0) {
-//                //查询成功
-//                SeckillSkuVo seckilInfoData = (SeckillSkuVo) skuSeckilInfo.get("data");
-//                skuItemVo.setSeckillSkuVo(seckilInfoData);
-//
-//                if (seckilInfoData != null) {
-//                    long currentTime = System.currentTimeMillis();
-//                    if (currentTime > seckilInfoData.getEndTime()) {
-//                        skuItemVo.setSeckillSkuVo(null);
-//                    }
-//                }
-//            }
-//        }, executor);
+        CompletableFuture<Void> seckillFuture = CompletableFuture.runAsync(() -> {
+            //3、远程调用查询当前sku是否参与秒杀优惠活动
+            R skuSeckilInfo = seckillFeignService.getSkuSeckilInfo(skuId);
+            if (skuSeckilInfo.getCode() == 0) {
+                //查询成功
+                SeckillSkuVo seckilInfoData = (SeckillSkuVo) skuSeckilInfo.get("data");
+                skuItemVo.setSeckillSkuVo(seckilInfoData);
+
+                if (seckilInfoData != null) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime > seckilInfoData.getEndTime()) {
+                        skuItemVo.setSeckillSkuVo(null);
+                    }
+                }
+            }
+        }, executor);
         //等待所有任务都完成
         try {
-            CompletableFuture.allOf(saleAttrFuture,descFuture,attrGroupFuture,imgFuture).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+            CompletableFuture.allOf(saleAttrFuture,descFuture,attrGroupFuture,imgFuture,seckillFuture).get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return skuItemVo;

@@ -2,6 +2,7 @@ package cn.qmulin.gomall.order.service.impl;
 
 import cn.qmulin.common.exception.NoStockException;
 import cn.qmulin.common.to.mq.OrderTo;
+import cn.qmulin.common.to.mq.SeckillOrderTo;
 import cn.qmulin.common.utils.R;
 import cn.qmulin.common.vo.MemberRespVo;
 import cn.qmulin.gomall.order.constant.OrderConstant;
@@ -616,43 +617,43 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
 
 
-//    /**
-//     * 创建秒杀单
-//     * @param orderTo
-//     */
-//    @Override
-//    public void createSeckillOrder(SeckillOrderTo orderTo) {
-//
-//        //TODO 保存订单信息
-//        OrderEntity orderEntity = new OrderEntity();
-//        orderEntity.setOrderSn(orderTo.getOrderSn());
-//        orderEntity.setMemberId(orderTo.getMemberId());
-//        orderEntity.setCreateTime(new Date());
-//        BigDecimal totalPrice = orderTo.getSeckillPrice().multiply(BigDecimal.valueOf(orderTo.getNum()));
-//        orderEntity.setPayAmount(totalPrice);
-//        orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
-//
-//        //保存订单
-//        this.save(orderEntity);
-//
-//        //保存订单项信息
-//        OrderItemEntity orderItem = new OrderItemEntity();
-//        orderItem.setOrderSn(orderTo.getOrderSn());
-//        orderItem.setRealAmount(totalPrice);
-//
-//        orderItem.setSkuQuantity(orderTo.getNum());
-//
-//        //保存商品的spu信息
-//        R spuInfo = productFeignService.getSpuInfoBySkuId(orderTo.getSkuId());
-//        SpuInfoVo spuInfoData = spuInfo.getData("data", new TypeReference<SpuInfoVo>() {
-//        });
-//        orderItem.setSpuId(spuInfoData.getId());
-//        orderItem.setSpuName(spuInfoData.getSpuName());
-//        orderItem.setSpuBrand(spuInfoData.getBrandName());
-//        orderItem.setCategoryId(spuInfoData.getCatalogId());
-//
-//        //保存订单项数据
-//        orderItemService.save(orderItem);
-//    }
+    /**
+     * 创建秒杀单
+     * @param orderTo
+     */
+    @Override
+    public void createSeckillOrder(SeckillOrderTo orderTo) {
+
+        //TODO 保存订单信息
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderSn(orderTo.getOrderSn());
+        orderEntity.setMemberId(orderTo.getMemberId());
+        orderEntity.setCreateTime(new Date());
+        BigDecimal totalPrice = orderTo.getSeckillPrice().multiply(BigDecimal.valueOf(orderTo.getNum()));
+        orderEntity.setPayAmount(totalPrice);
+        orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+
+        //保存订单
+        this.save(orderEntity);
+
+        //保存订单项信息
+        OrderItemEntity orderItem = new OrderItemEntity();
+        orderItem.setOrderSn(orderTo.getOrderSn());
+        orderItem.setRealAmount(totalPrice);
+
+        orderItem.setSkuQuantity(orderTo.getNum());
+
+        //保存商品的spu信息
+        R spuInfo = productFeignService.getSpuInfoBySkuId(orderTo.getSkuId());
+        SpuInfoVo spuInfoData = spuInfo.getData("data", new TypeReference<SpuInfoVo>() {
+        });
+        orderItem.setSpuId(spuInfoData.getId());
+        orderItem.setSpuName(spuInfoData.getSpuName());
+        orderItem.setSpuBrand(spuInfoData.getBrandName());
+        orderItem.setCategoryId(spuInfoData.getCatalogId());
+
+        //保存订单项数据
+        orderItemService.save(orderItem);
+    }
 
 }

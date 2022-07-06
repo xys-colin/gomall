@@ -1,5 +1,6 @@
 package cn.qmulin.gomall.order.service;
 
+import cn.qmulin.common.to.mq.SeckillOrderTo;
 import cn.qmulin.gomall.order.vo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.qmulin.common.utils.PageUtils;
@@ -31,6 +32,6 @@ public interface OrderService extends IService<OrderEntity> {
 
     String handlePayResult(PayAsyncVo vo);
 
-    //void createSeckillOrder(SeckillOrderTo orderTo);
+    void createSeckillOrder(SeckillOrderTo orderTo);
 }
 
